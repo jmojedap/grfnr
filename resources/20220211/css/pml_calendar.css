@@ -1,0 +1,75 @@
+/*
+Estilos para calendario herramienta de PML
+2021-10-22
+-----------------------------------------------------------------------------
+*/
+
+.table-calendar {
+    width: 100%;
+    background-color: white;
+    text-align: center;
+}
+
+.table-calendar tr{
+    border: 1px solid #f1f1f1;
+}
+
+.table-calendar td {
+    width: 14.285%;
+    padding: 0.3em;
+    height: 4em;
+}
+
+.table-calendar th {
+    border: 1px solid #f1f1f1;
+    padding: 0.2em;
+    height: 1em;
+}
+
+.table-calendar .events-point{
+    font-size: 0.3em;
+}
+
+.day {
+    cursor: pointer;
+}
+
+.day .day-number {
+    font-size: 0.9em;
+}
+
+.day:hover {
+    background-color: #03a9f4;
+    color: white;
+}
+
+.day:hover .events-point{
+    color: white;
+}
+
+.first_month_day {
+    border-left: 1px solid #e4e7ea;
+}
+
+.holyday{
+    background-color: #ffecb3;
+}
+
+.wd_6 {
+    background-color: #fff8e1;
+}
+
+.wd_7{
+    background-color: #ffecb3;
+}
+
+.day.active {
+    font-weight: bold;
+    background-color: #03a9f4;
+    color: white;
+}
+
+.today {
+    background-color: #e1f5fe;
+    font-weight: bold;
+}

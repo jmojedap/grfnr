@@ -1,0 +1,84 @@
+
+
+/* Fuentes */
+/*-----------------------------------------------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Condensed&display=swap');
+
+
+:root{
+    --color-main-app: #00ACC9;
+    --color-dark: #202945;
+    --color-bg: #FCFCFC;
+
+    --font-main: 'Roboto', sans-serif;
+
+    --color-bg-primary: #00ACC9;
+    --color-bg-primary-alt: #00ACC9;
+    --color-bg-success: #80BA26;
+    --color-bg-success-alt: #8bc92e;
+    --color-bg-warning: #CAD401;
+    --color-bg-warning-alt: #cfda07;
+    --color-bg-ligth: #ced4da;
+    --color-bg-ligth-alt: #FCFCFC;
+}
+
+.bg-primary {
+    background: var(--color-bg-primary);
+}
+.bg-success {
+    background-color: var(--color-bg-success) !important;
+}
+
+/* Botones */
+/*-----------------------------------------------------------------------------*/
+
+.btn-primary {
+    background-color: var(--color-bg-primary);
+    border-color: var(--color-bg-primary);
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.hover {
+    background-color: var(--color-bg-primary-alt);
+    border-color: var(--color-bg-primary-alt);
+}
+
+.btn-success {
+    background-color: var(--color-bg-success);
+    border-color: var(--color-bg-success);
+}
+.btn-success:hover,
+.btn-success:active,
+.btn-success.hover {
+    background-color: var(--color-bg-success-alt);
+    border-color: var(--color-bg-success-alt);
+}
+
+.btn-warning {
+    background-color: var(--color-bg-warning);
+    border-color: var(--color-bg-warning);
+}
+.btn-warning:hover,
+.btn-warning:active,
+.btn-warning.hover {
+    background-color: var(--color-bg-warning-alt);
+    border-color: var(--color-bg-warning-alt);
+}
+
+.btn-light{
+    border-color: var(--color-bg-ligth)
+}
+
+.btn-light:hover,
+.btn-light:active,
+.btn-light.hover{
+    background-color: var(--color-bg-ligth-alt);
+    border-color: #BBB;
+}
+
+/* Otros elementos */
+/*-----------------------------------------------------------------------------*/
+
+.progress-bar{
+    background-color: var(--color-bg-primary);
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "process_name":"Actualizar URL Files",
+        "process_link":"files/update_url",
+        "description":"Actualiza los campos url y url_thumbnail, según los parámetros base de la aplicación actual"
+    },
+    {
+        "process_name":"Actualizar campo posts.slug",
+        "process_link":"posts/update_slugs",
+        "description":"Actualiza tabla posts, campos: slug, donde slug está vacío"
+    },
+    {
+        "process_name":"Actualizar partes med_pregunta.codigo",
+        "process_link":"preguntas/run_process/update_codigo_parts",
+        "description":"Actualiza tabla med_pregunta, campos: tematica_id, subtematica_id, consecutivo_tematica y consecutivo_grupo"
+    }
+]

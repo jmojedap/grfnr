@@ -1,0 +1,26 @@
+/*
+Estilos para herramientas administrador y front grafinar
+2021-08-05
+-----------------------------------------------------------------------------
+*/
+
+/* colores */
+/*-----------------------------------------------------------------------------*/
+.color-text-1{ color: #00ACC9;}
+.color-text-2{ color: #80BA26;}
+.color-text-3{ color: #CAD401;}
+.color-text-4{ color: #202945;}
+.color-text-5{ color: #462B72;}
+.color-text-6{ color: #C90000;}
+
+.label-cat-1000{
+    background-color: blue;
+    color: white;
+}
+
+/* Tipos de cdocumentos incrustados */
+/*-----------------------------------------------------------------------------*/
+.embed-documento {background-color: blue;}
+.embed-presentacion {background-color: yellow;}
+.embed-hoja-calculo {background-color: green;}
+.embed-video {background-color: red;}

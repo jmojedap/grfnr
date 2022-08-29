@@ -1,0 +1,13 @@
+
+
+/* Fuentes */
+/*-----------------------------------------------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root{
+    --color-main-app: #5e4296;
+    --color-dark: #27135b;
+    --color-bg: #FFFFFF;
+
+    --font-main: 'Roboto', sans-serif;
+}
