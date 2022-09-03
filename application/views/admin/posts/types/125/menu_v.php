@@ -16,19 +16,6 @@ var sections = [
         roles: [1,2]
     },
     {
-        
-        text: 'Personajes',
-        id: 'escenas_personajes',
-        cf: 'escenas/personajes/' + element_id,
-        roles: [1,2]
-    },
-    {
-        text: 'Imágenes',
-        id: 'posts_images',
-        cf: 'posts/images/' + element_id,
-        roles: [1,2],
-    },
-    {
         text: 'Editar',
         id: 'posts_edit',
         cf: 'posts/edit/' + element_id,

@@ -1,8 +1,14 @@
+<?php $this->load->view('assets/recaptcha') ?>
+
 <div id="inicioApp">
     <div class="center_box_750">
         <div class="card">
             <div class="card-body">
                 <form accept-charset="utf-8" method="POST" id="inicioForm" @submit.prevent="handleSubmit">
+                    <input type="hidden" name="gender" v-model="fields.gender">
+                    <!-- Campo para validación Google ReCaptcha V3 -->
+                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+
                     <fieldset v-bind:disabled="loading">
                         <div class="mb-3 row">
                             <label for="organization_id" class="col-md-4 col-form-label text-end">Institución</label>
@@ -62,7 +68,7 @@
                                 <div class="d-flex">
                                     <button class="btn me-2 w120p" type="button"
                                         v-for="optionGender in optionsGender"  v-on:click="setGender(optionGender.cod)"
-                                        v-bind:class="{'btn-success': optionGender.cod == fields.gender }"
+                                        v-bind:class="{'btn-primary': optionGender.cod == fields.gender }"
                                         >
                                         <i class="far fa-circle" v-show="optionGender.cod != fields.gender"></i>
                                         <i class="far fa-circle-check" v-show="optionGender.cod == fields.gender"></i>
@@ -110,13 +116,25 @@ var inicioApp = createApp({
             var formValues = new FormData(document.getElementById('inicioForm'))
             axios.post(URL_API + 'app/start_session/', formValues)
             .then(response => {
-                toastr['success'](response.data.message)
+                if ( response.data.status == 1 ) {
+                    toastr['success'](response.data.message)
+                    window.location = URL_APP + 'escenas/catalogo'
+                }
+                if ( response.data.recaptcha != 1 ) {
+                    this.reloadPage()
+                }
                 this.loading = false
             })
             .catch( function(error) {console.log(error)} )
         },
         setGender: function(value){
             this.fields.gender = value
+        },
+        reloadPage: function(){
+            toastr['info']('Se reiniciará la página...', 'ReCaptcha falló')
+            setTimeout(() => {
+                window.location = URL_APP + 'app/inicio'
+            }, 3000);
         },
     },
     mounted(){

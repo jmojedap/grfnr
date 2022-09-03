@@ -13,18 +13,26 @@
     );
 
     $app_colors = array(
-        array('name' => 'main','background' => '#5e4296', 'font_color' => '#FFFFFF'),
-        array('name' => 'light','background' => '#927cbf', 'font_color' => '#000'),
-        array('name' => 'dark','background' => '#28145c', 'font_color' => '#FFF'),
-        array('name' => 'darker','background' => '#1E0A3C', 'font_color' => '#FFF'),
-        array('name' => 'secondary','background' => '#ffc43f', 'font_color' => '#FFFFFF'),
-        array('name' => 'color-2','background' => '#3E8EF7', 'font_color' => '#FFFFFF'),
-        array('name' => 'color-3','background' => '#11C26D', 'font_color' => '#FFFFFF'),
-        array('name' => 'color-4','background' => '#FDD835', 'font_color' => '#FFFFFF'),
-        array('name' => 'color-5','background' => '#00D9FF', 'font_color' => '#FFFFFF'),
-        array('name' => 'color-6','background' => '#FF7B33', 'font_color' => '#FFFFFF'),
-        array('name' => 'color-7','background' => '#F066FF', 'font_color' => '#FFFFFF'),
+        array('name' => 'main','background' => '#00ACC9', 'font_color' => '#FFF'),
+        array('name' => 'light','background' => '#00BEE0', 'font_color' => '#000'),
+        array('name' => 'dark','background' => '#008FA6', 'font_color' => '#FFF'),
+        array('name' => 'darker','background' => '#00798C', 'font_color' => '#FFF'),
+        array('name' => 'secondary','background' => '#80BA26', 'font_color' => '#000'),
+        array('name' => 'color-2','background' => '#CAD401', 'font_color' => '#000'),
+        array('name' => 'color-3','background' => '#202945', 'font_color' => '#FFFFFF'),
+        array('name' => 'color-4','background' => '#462B72', 'font_color' => '#FFFFFF'),
+        array('name' => 'color-5','background' => '#E33939', 'font_color' => '#FFFFFF'),
+        array('name' => 'color-6','background' => '#ff6a00', 'font_color' => '#FFF'),
+        array('name' => 'color-7','background' => '#ed1798', 'font_color' => '#FFFFFF'),
         array('name' => 'color-8','background' => '#FC3F71', 'font_color' => '#FFFFFF'),
+        array('name' => 'emotion-1','background' => '#99D96C', 'font_color' => '#000'),
+        array('name' => 'emotion-2','background' => '#FFBC69', 'font_color' => '#000'),
+        array('name' => 'emotion-3','background' => '#C5ADED', 'font_color' => '#000'),
+        array('name' => 'emotion-4','background' => '#FCD22A', 'font_color' => '#000'),
+        array('name' => 'emotion-5','background' => '#9ED0FF', 'font_color' => '#000'),
+        array('name' => 'emotion-6','background' => '#FFAFAB', 'font_color' => '#000'),
+        array('name' => 'emotion-7','background' => '#FF94D6', 'font_color' => '#000'),
+        array('name' => 'emotion-8','background' => '#EDEDED', 'font_color' => '#000'),
     );
 
     $arr_classes = array(
@@ -42,7 +50,7 @@
     $(document).ready(function(){
         $('.btn').click(function(){
             console.log('mostrando')
-            toastr['success']('El mensaje se guardó correctamenbe');
+            toastr['success']('Correcto');
             toastr['error']('Ocurrió un error');
             toastr['info']('Estamos informando algo');
             toastr['warning']('Estamos informando algo');

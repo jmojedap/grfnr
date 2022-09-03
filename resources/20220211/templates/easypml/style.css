@@ -63,16 +63,16 @@ body{
 }
 
 .navbar-nav .nav-item .active{
-    background-color: var(--color-dark);
+    background-color: var(--color-bg-primary-alt);
 }
 
 .navbar-nav .nav-item:hover{
-    background-color: var(--color-dark);
+    background-color: var(--color-bg-primary-alt);
     color: #FFF;
 }
 
 .navbar-nav .nav-item:active{
-    background-color: var(--color-dark);
+    background-color: var(--color-bg-primary-alt);
     color: #FFF;
 }
 

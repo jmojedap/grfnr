@@ -73,22 +73,32 @@ class App extends CI_Controller {
      */
     function start_session()
     {
-        $username = $this->App_model->respondent_username();
-        $data['message'] = 'usuario es: ' . $username;
-        $respondent_id = 0;
+        //Respuesta inicial
+            $data['status'] = 0;
+            $data['message'] = 'No se pudo iniciar la sesión de respuesta';
+        
+        //Validar Recaptcha
+        $this->load->model('Validation_model');
+        $data['recaptcha'] = $this->Validation_model->recaptcha(); //Validación Google ReCaptcha V3
+        
+        if ( $data['recaptcha'] == 1 ) {
+            $respondent_id = 0; //Valor inicial
 
-        $user = $this->Db_model->row('users', "username = '{$username}'");
-        if ( is_null($user) ) {
-            //No existe, crear
-            $respondent_id = $this->App_model->create_respondent($username);
-        } else {
-            $respondent_id = $user->id;
-        }
-
-        if ( $respondent_id > 0 ) {
-            $this->load->model('Account_model');
-            $this->Account_model->create_session($username);
-            $data['message'] .= '. Sesión iniciada';
+            $username = $this->App_model->respondent_username();
+            $user = $this->Db_model->row('users', "username = '{$username}'");
+            if ( is_null($user) ) {
+                //No existe, crear
+                $respondent_id = $this->App_model->create_respondent($username);
+            } else {
+                $respondent_id = $user->id;
+            }
+    
+            if ( $respondent_id > 0 ) {
+                $this->load->model('Account_model');
+                $this->Account_model->create_session($username);
+                $data['status'] = 1;
+                $data['message'] = 'Sesión iniciada';
+            }
         }
 
         //Salida JSON

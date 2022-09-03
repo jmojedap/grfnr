@@ -59,6 +59,8 @@ public $url_controller = URL_APP . 'app/';
         $data['optionsInstituciones'] = $this->App_model->options_post('type_id = 101');
         $data['optionsSchoolLevel'] = $this->Item_model->arr_options('category_id = 3 AND item_group = 1');
         $data['optionsGender'] = $this->Item_model->arr_options('category_id = 59 AND item_group = 1');
+
+        $data['recaptcha_sitekey'] = K_RCSK;    //config/constants.php
         
         $this->load->view(TPL_FRONT, $data);
 

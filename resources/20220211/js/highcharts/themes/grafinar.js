@@ -1,4 +1,4 @@
-var hc_brave_theme = {
+var hc_grafinar_theme = {
   "colors": ['#0c86ca', '#ED2279', '#11C26D', '#FDD835', '#00D9FF', '#FF7B33', '#F066FF', '#FC3F71','#3E8EF7'],
   "chart": {
     "style": {

@@ -186,7 +186,7 @@ class Db_model extends CI_Model{
         
         if ( $row_id == 0 ) 
         {
-            //No exists, insert
+            //No existe, insertar
             $this->db->insert($table, $row);
             $row_id = $this->db->insert_id();
         }

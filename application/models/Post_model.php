@@ -68,9 +68,11 @@ class Post_model extends CI_Model{
         $arr_select['export'] = '*';
         $arr_select['22_list'] = 'id, post_name AS name, excerpt AS description';
 
-        $arr_select['121_escenas'] = 'id, post_name AS title, excerpt AS description, slug';
-
-        
+        $arr_select['121_escenas'] = 'id, post_name AS title, excerpt AS description, slug,
+            url_thumbnail, url_image';
+        $arr_select['125_personajes'] = 'id, post_name AS nombre, code AS code_ucc, parent_id AS escena_id,
+            text_1 AS cod_escena, position AS index, cat_1 AS cod_grupo_edad, cat_2 AS cod_genero,
+            text_2 AS codigo, integer_3 AS cambio_version_2, integer_1 AS left, integer_2 as top';
 
         return $arr_select[$format];
     }
