@@ -1,8 +1,6 @@
-
-
 /* Fuentes */
 /*-----------------------------------------------------------------------------*/
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 
 :root{
@@ -10,7 +8,7 @@
     --color-dark: #202945;
     --color-bg: #FCFCFC;
 
-    --font-main: 'Roboto', sans-serif;
+    --font-main: 'Rubik', sans-serif;
 
     --color-bg-primary: #00ACC9;
     --color-bg-primary-alt: #0096b1;

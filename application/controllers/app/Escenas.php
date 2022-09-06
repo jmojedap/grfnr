@@ -96,6 +96,17 @@ class escenas extends CI_Controller {
     }
 
     /**
+     * Marcar un posts respuesta como finalizado
+     * 2022-09-04
+     */
+    function finalizar_respuesta($escena_id, $respuesta_id) {
+        $data = $this->Escena_model->finalizar_respuesta($escena_id, $respuesta_id);
+
+        //Salida JSON
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    /**
      * Form login de users se ingresa con nombre de user y 
      * contraseña. Los datos se envían vía ajax a accounts/validate_login
      */

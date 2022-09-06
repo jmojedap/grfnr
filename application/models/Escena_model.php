@@ -68,7 +68,7 @@ class Escena_model extends CI_Model{
             $arr_row['type_id'] = 129;
             $arr_row['post_name'] = $escena->title;
             $arr_row['content_json'] = $this->personajes_json($escena_id);
-            $arr_row['status'] = 10; //Iniciada
+            $arr_row['status'] = 5; //Iniciada
             $arr_row['related_1'] = $user->id;
             $arr_row['related_2'] = $escena->id;
             $arr_row['integer_1'] = $this->pml->age($user->birth_date);
@@ -91,6 +91,7 @@ class Escena_model extends CI_Model{
      */
     function guardar_respuesta($escena_id, $respuesta_id)
     {
+        $arr_row['status'] = 2; //En proceso
         $arr_row['content'] = $this->input->post('content');
         $arr_row['content_json'] = $this->input->post('content_json');
         $arr_row['updater_id'] = $this->session->userdata('user_id');
@@ -98,6 +99,7 @@ class Escena_model extends CI_Model{
 
         $condition = "id = {$respuesta_id} AND related_2 = {$escena_id}";
         $data['saved_id'] = $this->Db_model->save('posts', $condition, $arr_row);
+        $data['respuesta_status'] = $arr_row['status'];
     
         return $data;
     }
@@ -114,11 +116,84 @@ class Escena_model extends CI_Model{
         $personajes = $this->personajes($escena_id);
 
         foreach ($personajes->result_array() as $row) {
-            $personaje['id'] = $row['id'];
-            $personaje['emocion_cod'] = 0;
+            $personaje['character_id'] = $row['id'];
+            $personaje['feeling_cod'] = 0;
             $personajes_json[] = $personaje;
         }
 
         return json_encode($personajes_json);
+    }
+
+    /**
+     * Marcar un posts respuesta como finalizado
+     * 2022-09-04
+     */
+    function finalizar_respuesta($escena_id, $respuesta_id)
+    {
+        $data = array('saved_id' => 0, 'message' => 'No se pudo finalizar la respuesta');
+
+        //Condición de identificación, estado y datos
+        $condition = "type_id = 129 AND id = {$respuesta_id}
+            AND related_2 = {$escena_id} AND status = 2";
+        $respuesta = $this->Db_model->row('posts', $condition);
+
+        if ( ! is_null($respuesta) ) {
+            $arr_row['status'] = 1; //Finalizada
+            $arr_row['updater_id'] = $this->session->userdata('user_id');
+            $arr_row['updated_at'] = date('Y-m-d H:i:s');
+
+            $condition = "id = {$respuesta->id}";
+            $data['saved_id'] = $this->Db_model->save('posts', $condition, $arr_row);
+            if ( $data['saved_id'] > 0 ) {
+                $data['message'] = 'Respuesta finalizada';
+            }
+
+            $data['details'] = $this->guardar_detalle_respuesta($escena_id, $respuesta_id);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Guardar detalle de emociones de una respuesta en la tabla gfr_answers
+     * 2022-09-05
+     */
+    function guardar_detalle_respuesta($escena_id, $respuesta_id)
+    {
+        $data = array('status' => 0, 'qty_details' => 0);
+
+        $escena = $this->row($escena_id);
+        $respuesta = $this->Db_model->row_id('posts', $respuesta_id);
+
+        $emocionesPersonajes = json_decode($respuesta->content_json);
+        
+        //Preventivo, eliminar detalle ya existente
+        $sql = "DELETE FROM grf_answers WHERE scene_id = {$escena_id} AND answer_id = {$respuesta_id}";
+        $this->db->query($sql);
+
+        $arr_row['user_id'] = $respuesta->related_1;
+        $arr_row['scene_id'] = $escena_id;
+        $arr_row['answer_id'] = $respuesta_id;
+
+        foreach ($emocionesPersonajes as $emocionPersonaje) {
+            $arr_row['character_id'] = $emocionPersonaje->character_id;
+            $arr_row['feeling_cod'] = $emocionPersonaje->feeling_cod;
+
+            $this->db->insert('grf_answers', $arr_row);
+
+            if ( $this->db->insert_id() ) { $data['qty_details']++; }
+        }
+
+        //Extra control, eliminar detalles huérfanos
+        $this->limpiar_detalle_respuesta();
+
+        return $data;
+    }
+
+    function limpiar_detalle_respuesta()
+    {
+        $sql = 'DELETE FROM grf_answers
+            WHERE answer_id NOT IN (SELECT id FROM posts)';
+        $this->db->query($sql);
     }
 }

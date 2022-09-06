@@ -1,13 +1,13 @@
 <div class="escena-grid">
-    <div id="escena_image" v-bind:style="`background-image: url(` + escena.url_image + `);`">
-        <div v-for="(personaje, key) in personajes" v-bind:class="{'active': personaje.id == currPersonaje.id }"
+    <div id="escena-image" v-bind:style="`background-image: url(` + escena.url_image + `);`">
+        <div class="marker" v-for="(personaje, key) in personajes" v-bind:class="{'active': personaje.id == currPersonaje.id }"
             v-bind:style="`top: ` + personaje.top + `px; left: ` + personaje.left + `px;`" v-on:click="setCurrent(key)">
-            <span class="marker">
+            <div class="num-marker">
                 {{ personaje.index }}
-            </span>
-            <span class="emocion" v-bind:class="`emocion-` + parseInt(personajesEmociones[key].emocion_cod)">
-                {{ emocionName(personajesEmociones[key].emocion_cod) }}
-            </span>
+            </div>
+            <div class="emocion-marker" v-bind:class="`emocion-` + parseInt(personajesEmociones[key].feeling_cod)">
+                {{ emocionName(personajesEmociones[key].feeling_cod) }}
+            </div>
         </div>
     </div>
     <div>
@@ -47,9 +47,9 @@
                             {{ personaje.nombre }}
                         </td>
                         <td>
-                            <select class="emocion-select"
-                                v-bind:class="`emocion-` + parseInt(personajesEmociones[key].emocion_cod)"
-                                v-model="personajesEmociones[key].emocion_cod">
+                            <select class="emocion-select" v-bind:disabled="loading"
+                                v-bind:class="`emocion-` + parseInt(personajesEmociones[key].feeling_cod)"
+                                v-model="personajesEmociones[key].feeling_cod">
                                 <option v-for="optionEmocion in arrEmocion" v-bind:value="optionEmocion.str_cod">
                                     {{ optionEmocion.name }}</option>
                             </select>

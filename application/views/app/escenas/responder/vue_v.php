@@ -5,6 +5,7 @@ const arrGenero = <?= json_encode($arrGenero) ?>;
 const arrGrupoEdad = <?= json_encode($arrGrupoEdad) ?>;
 const arrEmocion = <?= json_encode($arrEmocion) ?>;
 const escenaImage = document.getElementById("escena_image");
+const narracionMinLength = 50;
 
 // VueApp
 var responderApp = createApp({
@@ -21,12 +22,39 @@ var responderApp = createApp({
             loading: false,
             respuesta: {
                 id: <?= $respuesta->id ?>,
+                status: <?= $respuesta->status ?>,
                 content: <?= json_encode($respuesta->content) ?>,
             },
             section: 'emociones',
+            savingStatus: 0
         }
     },
+    computed: {
+        //Verificar si los datos de respuesta están completos
+        qtyWithoutEmotion: function(){
+            withoutEmotion = this.personajesEmociones.filter(item => item.feeling_cod == 0)
+            return withoutEmotion.length
+        },
+        completedNarracion: function(){
+            var completedNarracion = false
+            if ( this.respuesta.content.length > narracionMinLength ) {
+                completedNarracion = true
+            }
+            return completedNarracion
+        },
+        completedAnswer: function(){
+            var completedAnswer = true
+            if ( this.qtyWithoutEmotion > 0 ) completedAnswer = false
+            if ( ! this.completedNarracion ) completedAnswer = false
+            return completedAnswer
+        },
+    },
     methods: {
+        checkStatus: function(){
+            if ( this.respuesta.status == 1 ) {
+                this.loading = true
+            }
+        },
         generoName: function(value = '', field = 'name'){
             var generoName = ''
             var item = arrGenero.find(row => row.cod == value)
@@ -50,17 +78,32 @@ var responderApp = createApp({
         },
         saveAnswer: function(){
             this.loading = true
+            this.savingStatus = 0
             var formValues = new FormData()
             formValues.append('content', this.respuesta.content)
             formValues.append('content_json', JSON.stringify(this.personajesEmociones))
-            axios.post(URL_APP + 'escenas/guardar_respuesta/' + this.escena.id + '/' + this.respuesta.id, formValues)
+            axios.post(URL_API + 'escenas/guardar_respuesta/' + this.escena.id + '/' + this.respuesta.id, formValues)
             .then(response => {
                 if ( response.data.saved_id > 0 ) {
-                    toastr['success']('Guardado')
+                    this.escena.status = response.data.respuesta_status
+                    this.savingStatus = 1
                 }
                 this.loading = false
             })
             .catch( function(error) {console.log(error)} )
+        },
+        finalizeAnswer: function(){
+            this.loading = true
+            axios.get(URL_API + 'escenas/finalizar_respuesta/' + this.escena.id + '/' + this.respuesta.id)
+            .then(response => {
+                if ( response.data.saved_id > 0 ) {
+                    this.respuesta.status = 1
+                    toastr['success'](response.data.message)
+                } else {
+                    this.loading = false
+                }
+            })
+            .catch(function(error) { console.log(error) })
         },
         setSection: function(value){
             this.section = value
@@ -73,7 +116,7 @@ var responderApp = createApp({
         },
     },
     mounted(){
-        //this.getList()
+        this.checkStatus()
     }
 }).mount('#responderApp')
 </script>
