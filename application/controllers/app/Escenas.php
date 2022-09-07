@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class escenas extends CI_Controller {
+class Escenas extends CI_Controller {
         
 // Variables generales
 //-----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ class escenas extends CI_Controller {
         $data['head_title'] = APP_NAME;
         $data['view_a'] = $this->views_folder . 'catalogo_v';
 
-        $this->App_model->view(TPL_FRONT, $data);
+        $this->App_model->view('templates/easypml/answers', $data);
     }
 
 // PROCESO DE RESPUESTA
@@ -79,7 +79,7 @@ class escenas extends CI_Controller {
         $data['arrGrupoEdad'] = $this->Item_model->arr_options('category_id = 101');
         $data['arrEmocion'] = $this->Item_model->arr_options('category_id = 120');
 
-        $this->App_model->view(TPL_FRONT, $data);
+        $this->App_model->view('templates/easypml/answers', $data);
     }
 
     /**

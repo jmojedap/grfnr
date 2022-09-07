@@ -64,25 +64,6 @@ class File_model extends CI_Model{
 
         return $data;
     }
-    
-    /**
-     * String con condición WHERE SQL para filtrar post
-     */
-    function search_condition_org($filters)
-    {
-        $condition = NULL;
-        
-        //Tipo de post
-        if ( $filters['type'] != '' ) { $condition .= "type_id = {$filters['type']} AND "; }
-        if ( $filters['condition'] != '' ) { $condition .= "{$filters['condition']} AND "; }
-        
-        if ( strlen($condition) > 0 )
-        {
-            $condition = substr($condition, 0, -5);
-        }
-        
-        return $condition;
-    }
 
     /**
      * Segmento Select SQL, con diferentes formatos, consulta de products
@@ -92,6 +73,7 @@ class File_model extends CI_Model{
     {
         $arr_select['general'] = '*';
         $arr_select['export'] = '*';
+        $arr_select['asentimiento'] = 'id, file_name, title, type, url, is_image';
 
         return $arr_select[$format];
     }
@@ -129,7 +111,7 @@ class File_model extends CI_Model{
 
     /**
      * String con condición WHERE SQL para filtrar post
-     * 2020-08-01
+     * 2022-09-07
      */
     function search_condition($filters)
     {
@@ -138,14 +120,17 @@ class File_model extends CI_Model{
         $condition .= $this->role_filter() . ' AND ';
 
         //q words condition
-        $words_condition = $this->Search_model->words_condition($filters['q'], array('file_name', 'folder', 'title', 'subtitle', 'keywords', 'description'));
+        $q_words = ['file_name', 'folder', 'title', 'subtitle', 'keywords', 'description'];
+        $words_condition = $this->Search_model->words_condition($filters['q'], $q_words);
         if ( $words_condition )
         {
             $condition .= $words_condition . ' AND ';
         }
         
         //Otros filtros
-        //if ( $filters['type'] != '' ) { $condition .= "type_id = {$filters['type']} AND "; }
+        if ( $filters['fe1'] != '' ) { $condition .= "table_id = {$filters['fe1']} AND "; }
+        if ( $filters['fe2'] != '' ) { $condition .= "related_1 = {$filters['fe2']} AND "; }
+        if ( $filters['fe3'] != '' ) { $condition .= "album_id = {$filters['fe3']} AND "; }
         
         //Quitar cadena final de ' AND '
         if ( strlen($condition) > 0 ) { $condition = substr($condition, 0, -5);}
@@ -220,7 +205,7 @@ class File_model extends CI_Model{
     /**
      * Realiza el upload de un file al servidor, crea el registro asociado en
      * la tabla "file".
-     * 2021-09-20
+     * 2022-09-07
      */
     function upload($user_id, $file_id = NULL)
     {
@@ -230,22 +215,22 @@ class File_model extends CI_Model{
         if ( $this->upload->do_upload('file_field') )  //Campo "file_field" del formulario
         {
             $upload_data = $this->upload->data();
-            $this->mod_original($upload_data['full_path']);          //Modificar imagen original
 
             //Guardar registro en la tabla "file"
                 $upload_data['user_id'] = $user_id;
                 $row = $this->save($file_id, $upload_data);
                 
             //Si es imagen, se generan miniaturas y edita imagen original
-                if ( $row->is_image ) { $this->create_thumbnails($row); }
+                if ( $row->is_image ) {
+                    $this->mod_original($upload_data['full_path']);
+                    $this->create_thumbnails($row);
+                }
             
             //Array resultado
-                $data = array('status' => 1);
-                //$data['upload_data'] = $this->upload->data();
+                $data = array('status' => 1);;
                 $data['row'] = $row;
-        }
-        else    //No se cargó
-        {
+        } else {
+            //No se cargó
             $data = array('status' => 0);
             $data['html'] = $this->upload->display_errors('<div role="alert" class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><i class="fa fa-warning"></i> ', '</div>');
         }
@@ -277,7 +262,7 @@ class File_model extends CI_Model{
 
     /**
      * Crea el registro del file en la tabla file
-     * 2020-07-20
+     * 2022-09-07
      */
     function insert($upload_data)
     {
@@ -301,9 +286,14 @@ class File_model extends CI_Model{
             $arr_row['created_at'] = date('Y-m-d H:i:s');
             $arr_row['creator_id'] = $upload_data['user_id'];
 
+            //Campos adicionales
+            if ( ! is_null($this->input->post('album_id')) ) { $arr_row['description'] = $this->input->post('description'); }
+
         //Obtener dimensiones
-            $arr_dimensions = $this->arr_dimensions($upload_data['full_path']);
-            $arr_row = array_merge($arr_row, $arr_dimensions);
+            if ( $arr_row['is_image'] ) {
+                $arr_dimensions = $this->arr_dimensions($upload_data['full_path']);
+                $arr_row = array_merge($arr_row, $arr_dimensions);
+            }
             
         //Insertar
             $this->db->insert('files', $arr_row);

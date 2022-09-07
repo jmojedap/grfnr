@@ -6,19 +6,20 @@ Estilos para herramientas administrador y front grafinar
 
 /* colores */
 /*-----------------------------------------------------------------------------*/
-.color-text-1{ color: #00ACC9;}
+.color-text-1{ color: #008FA6;}
 .color-text-2{ color: #80BA26;}
-.color-text-3{ color: #CAD401;}
-.color-text-4{ color: #202945;}
-.color-text-5{ color: #462B72;}
-.color-text-6{ color: #C90000;}
+.color-text-3{ color: #888f00;}
+.color-text-4{ color: #462B72;}
+.color-text-5{ color: #E33939;}
+.color-text-6{ color: #ff6a00;}
+.color-text-7{ color: #ed1798;}
 
 .label-cat-1000{
     background-color: blue;
     color: white;
 }
 
-/* Tipos de cdocumentos incrustados */
+/* Tipos de documentos incrustados */
 /*-----------------------------------------------------------------------------*/
 .embed-documento {background-color: blue;}
 .embed-presentacion {background-color: yellow;}

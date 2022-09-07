@@ -38,7 +38,7 @@
 
         <!-- Recursos PML -->
         <link type="text/css" rel="stylesheet" href="<?= URL_RESOURCES ?>css/pacarina.css">
-        <link type="text/css" rel="stylesheet" href="<?= URL_RESOURCES ?>css/grafinar_admin.css">
+        <link type="text/css" rel="stylesheet" href="<?= URL_RESOURCES ?>css/app_grafinar.css">
         <script src="<?= URL_RESOURCES . 'js/pcrn.js' ?>"></script>
         <script>
             const URL_APP = '<?= URL_ADMIN ?>'; const URL_ADMIN = '<?= URL_ADMIN ?>'; const URL_API = '<?= URL_API ?>'; const URL_FRONT = '<?= URL_FRONT ?>';

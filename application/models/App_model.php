@@ -94,8 +94,10 @@ class App_model extends CI_Model{
         $summary = array();
 
         $summary['users']['num_rows'] = $this->db->count_all('users');
-        $summary['users']['qty_deportistas'] = $this->Db_model->num_rows('users', 'role = 21');
-        $summary['posts']['num_rows'] = $this->db->count_all('posts');
+        $summary['users']['num_participantes'] = $this->Db_model->num_rows('users', 'role = 32');
+        $summary['posts']['num_escenas'] = $this->Db_model->num_rows('posts', 'type_id = 121');
+        $summary['posts']['num_personajes'] = $this->Db_model->num_rows('posts', 'type_id = 125');
+        $summary['posts']['num_respuestas'] = $this->Db_model->num_rows('posts', 'type_id = 129');
         
         //Lapso próxima semana
         $today = date('Y-m-d') . ' 00:00:00';

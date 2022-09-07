@@ -66,7 +66,7 @@
                             <label for="gender" class="col-md-4 col-form-label text-end"></label>
                             <div class="col-md-8">
                                 <div class="d-flex">
-                                    <button class="btn me-2 w120p" type="button"
+                                    <button class="btn me-2" type="button"
                                         v-for="optionGender in optionsGender"  v-on:click="setGender(optionGender.cod)"
                                         v-bind:class="{'btn-primary': optionGender.cod == fields.gender }"
                                         >
@@ -94,17 +94,30 @@
 </div>
 
 <script>
+// Variables
+//-----------------------------------------------------------------------------
+/*var userData = {
+    organization_id: '01',
+    first_name: 'Lina María',
+    last_name: 'López',
+    school_level: '06',
+    gender: '1',
+}*/
+
+var userData = {
+    organization_id: '',
+    first_name: '',
+    last_name: '',
+    school_level: '',
+    gender: '',
+}
+// VueApp
+//-----------------------------------------------------------------------------
 var inicioApp = createApp({
     data(){
         return{
             loading: false,
-            fields: {
-                organization_id: '01',
-                first_name: 'Javier',
-                last_name: 'Ojeda',
-                school_level: '06',
-                gender: '2',
-            },
+            fields: userData,
             optionsInstitucion: <?= json_encode($optionsInstituciones) ?>,
             optionsSchoolLevel: <?= json_encode($optionsSchoolLevel) ?>,
             optionsGender: <?= json_encode($optionsGender) ?>,
