@@ -1,19 +1,5 @@
 
 <script>
-// Variables
-//-----------------------------------------------------------------------------
-var arrType = <?= json_encode($arr_type); ?>;
-
-// Filters
-//-----------------------------------------------------------------------------
-function typeName(value, field = 'name'){
-    var typeName = ''
-    if (!value) typeName = '-'
-    var item = arrType.find(row => row.cod == value)
-    if ( item != undefined ) typeName = item[field]
-    return typeName
-}
-
 // Vue App
 //-----------------------------------------------------------------------------
 var appExplore = new Vue({
@@ -25,7 +11,7 @@ var appExplore = new Vue({
         cf: '<?= $cf ?>',
         controller: '<?= $controller ?>',
         qtyResults: <?= $qtyResults ?>,
-        perPage: 10,
+        perPage: 12,
         numPage: <?= $numPage ?>,
         maxPage: <?= $maxPage ?>,
         list: <?= json_encode($list) ?>,
@@ -37,7 +23,7 @@ var appExplore = new Vue({
         showFilters: false,
         loading: false,
         activeFilters: false,
-        optionsType: arrType,
+        arrEscena: <?= json_encode($arrEscena) ?>,
     },
     methods: {
         getList: function(e, numPage = 1){

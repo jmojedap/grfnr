@@ -284,6 +284,7 @@ class App_model extends CI_Model{
         $institucion = $this->Db_model->row_id('posts', $this->input->post('organization_id'));
 
         if ( ! is_null($institucion) ) {
+            $arr_row['display_name'] = $username;
             $arr_row['username'] = $username;
             $arr_row['email'] = $username . '@' . APP_DOMAIN;
             $arr_row['role'] = 32;

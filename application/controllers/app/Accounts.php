@@ -51,9 +51,7 @@ class Accounts extends CI_Controller {
             } else {
                 $data['head_title'] = APP_NAME;
                 $data['view_a'] = $this->views_folder . 'login_v';
-                //$data['g_client'] = $this->Account_model->g_client(); //Para botón login con Google
                 $this->load->view('templates/easypml/start', $data);
-                //$this->load->view('templates/admin_pml/start', $data);
             }
     }
     
@@ -76,12 +74,13 @@ class Accounts extends CI_Controller {
         $destination = 'app/accounts/login';
         if ( $this->session->userdata('logged') )
         {
-            $arr_destination = array(
+            $arr_destination = [
                 1 => 'admin/app/dashboard/',  //Desarrollador
                 2 => 'admin/app/dashboard/',  //Administrador
-                4 => 'admin/calendar/calendar',   //Entrenador
-                21 => 'app/accounts/profile/'     //Deportista
-            );
+                3 => 'admin/app/dashboard/',  //Editor
+                21 => 'app/accounts/profile/',     //Suscriptor
+                32 => 'app/accounts/profile/',    //Participante
+            ];
                 
             $destination = $arr_destination[$this->session->userdata('role')];
         }

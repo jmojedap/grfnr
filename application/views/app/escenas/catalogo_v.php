@@ -7,6 +7,10 @@
                 onerror="this.src='<?= URL_IMG ?>app/sm_nd_square.png'">
             <div class="card-body">
                 {{ escena.title }}
+                <div v-show="escena.respuesta_status > 0">
+                    <span class="badge bg-success" v-show="escena.respuesta_status == 1">Respondido</span>
+                    <span class="badge bg-info" v-show="escena.respuesta_status == 2">Iniciado</span>
+                </div>
             </div>
         </div>
     </div>
@@ -25,8 +29,12 @@
                     onerror="this.src='<?= URL_IMG ?>app/sm_nd_square.png'">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn w120p btn-light" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn w120p btn-primary" v-on:click="startAnswer">Iniciar</button>
+                    <button type="button" class="btn w120p btn-primary"
+                        v-on:click="startAnswer" v-show="currEscena.respuesta_id == null"
+                    >Iniciar</button>
+                    <button type="button" class="btn w120p btn-primary"
+                        v-on:click="openAnswer" v-show="currEscena.respuesta_id != null"
+                    >Abrir</button>
                 </div>
             </div>
         </div>
@@ -51,27 +59,28 @@ var catalogoApp = createApp({
         getList: function() {
             this.loading = true
             var formValues = new FormData(document.getElementById('searchForm'))
-            axios.post(URL_API + 'escenas/get/', formValues)
+            axios.post(URL_API + 'escenas/get_mis_escenas/', formValues)
                 .then(response => {
-                    this.list = response.data.list
+                    this.list = response.data.escenas
                     this.loading = false
                 })
-                .catch(function(error) {
-                    console.log(error)
-                })
+                .catch(function(error) { console.log(error) })
         },
         setCurrent: function(key) {
             this.currEscena = this.list[key]
+        },
+        openAnswer: function(){
+            window.location = URL_APP + 'escenas/responder/' + this.currEscena.id + '/' + this.currEscena.respuesta_id
         },
         startAnswer: function() {
             this.loading = true
             axios.get(URL_APP + 'escenas/iniciar_respuesta/' + this.currEscena.id)
             .then(response => {
-                var respuesta_id = response.data.saved_id
-                if ( respuesta_id > 0 ) {
+                var respuestaId = response.data.saved_id
+                if ( respuestaId > 0 ) {
                     toastr['info']('Cargando escena...')
                     setTimeout(() => {
-                        window.location = URL_APP + 'escenas/responder/' + this.currEscena.id + '/' + respuesta_id
+                        window.location = URL_APP + 'escenas/responder/' + this.currEscena.id + '/' + respuestaId
                     }, 500);
                 } else {
                     this.loading = false

@@ -54,7 +54,8 @@ class App extends CI_Controller {
 
     function test(){
         $data['head_title'] = 'Nueva';
-        $this->App_model->view('templates/easypml/navbar_new_v', $data);
+        $data['view_a'] = 'templates/apml/content';
+        $this->App_model->view('templates/admin_pml/main', $data);
     }
 
     function d3(){

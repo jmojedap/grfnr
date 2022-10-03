@@ -13,23 +13,19 @@
     <div>
         <ul class="nav nav-tabs mb-2">
             <li class="nav-item pointer">
-                <a class="nav-link" v-bind:class="{'active': section == 'emociones' }" v-on:click="setSection('emociones')">Emociones</a>
+                <a class="nav-link" v-bind:class="{'active': section == 'narracion' }" v-on:click="setSection('narracion')">Historia</a>
             </li>
             <li class="nav-item pointer">
-                <a class="nav-link" v-bind:class="{'active': section == 'narracion' }" v-on:click="setSection('narracion')">Historia</a>
+                <a class="nav-link" v-bind:class="{'active': section == 'emociones' }" v-on:click="setSection('emociones')">Emociones</a>
             </li>
         </ul>
 
         <div v-show="section == 'narracion'">
-            <form accept-charset="utf-8" method="POST" id="respuestaForm" @submit.prevent="saveAnswer">
-                <fieldset v-bind:disabled="loading">
-                    <div class="mb-3">
-                        <textarea name="content" class="form-control" rows="20" required
-                            title="Escribe una historia sobre esta escena"
-                            placeholder="Escribe una historia sobre esta escena" v-model="respuesta.content"></textarea>
-                    </div>
-                    <fieldset>
-            </form>
+            <div class="card">
+                <div class="card-body">
+                    <p>{{ respuesta.content }}</p>
+                </div>
+            </div>
         </div>
         <div v-show="section == 'emociones'">
             <table class="table table-sm bg-white">
@@ -45,13 +41,10 @@
                         <td>
                             {{ personaje.nombre }}
                         </td>
-                        <td>
-                            <select class="emocion-select" v-bind:disabled="loading"
-                                v-bind:class="`emocion-` + parseInt(personajesEmociones[key].feeling_cod)"
-                                v-model="personajesEmociones[key].feeling_cod">
-                                <option v-for="optionEmocion in arrEmocion" v-bind:value="optionEmocion.str_cod">
-                                    {{ optionEmocion.name }}</option>
-                            </select>
+                        <td v-bind:class="`emocion-` + parseInt(personajesEmociones[key].feeling_cod)">
+                            <span>
+                                {{ emocionName(personajesEmociones[key].feeling_cod) }}
+                            </span>
                         </td>
                     </tr>
                 </tbody>

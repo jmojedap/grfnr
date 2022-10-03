@@ -72,14 +72,14 @@ class User_model extends CI_Model{
     function select($format = 'general')
     {
         $arr_select['general'] = 'users.id, username, document_number, 
-            document_type, display_name, first_name, last_name, email, role, address, phone_number,
+            document_type, display_name, first_name, last_name, email, role,
             users.image_id, users.url_image, users.url_thumbnail, users.status, users.type_id, 
             users.created_at, users.updated_at, last_login
             admin_notes, birth_date';
 
         $arr_select['export'] = 'users.id, username, document_number AS no_documento, document_type AS tipo_documento, 
             display_name AS nombre, email, role AS rol, users.status,
-            address AS direccion, phone_number AS telefono, gender AS sexo, birth_date AS fecha_nacimiento,
+            gender AS sexo, birth_date AS fecha_nacimiento,
             users.created_at AS creado, users.updated_at AS actualizado, 
             admin_notes AS notas_internas';
 
@@ -126,8 +126,7 @@ class User_model extends CI_Model{
 
         //q words condition
         $q_search_fields = [
-            'first_name', 'last_name', 'display_name', 'email', 'document_number',
-            'team_1', 'team_2', 'job_role'
+            'first_name', 'last_name', 'display_name', 'email', 'about', 'admin_notes',
         ];
         $words_condition = $this->Search_model->words_condition($filters['q'], $q_search_fields);
         if ( $words_condition )

@@ -33,6 +33,26 @@ class Escena_model extends CI_Model{
 // PROCESO DE RESPUESTA
 //-----------------------------------------------------------------------------
 
+    function mis_escenas($user_id)
+    {
+        $select = 'posts.id, posts.post_name AS title, posts.excerpt AS description, 
+            posts.slug, posts.url_thumbnail, posts.url_image,
+            respuestas.id AS respuesta_id, respuestas.status AS respuesta_status';
+
+        $this->db->select($select);
+        $join_condition = "respuestas.type_id = 129 AND respuestas.related_1 = {$user_id}";
+        $this->db->join('posts as respuestas', "posts.id = respuestas.related_2 AND {$join_condition}", 'left');
+        $this->db->where('posts.type_id', 121);
+        //$this->db->where('respuestas.related_1', $user_id);
+        //$this->db->where('respuestas.related_2', 129);
+        $this->db->order_by('posts.id', 'ASC');
+        $escenas = $this->db->get('posts');
+
+        //echo $this->db->last_query();
+
+        return $escenas;
+    }
+
     function row($escena_id)
     {
         $row = NULL;
@@ -66,7 +86,7 @@ class Escena_model extends CI_Model{
             $arr_row = $this->Db_model->arr_row(false); //Datos base
 
             $arr_row['type_id'] = 129;
-            $arr_row['post_name'] = $escena->title;
+            $arr_row['post_name'] = 'Respuesta a: ' . $escena->title;
             $arr_row['content_json'] = $this->personajes_json($escena_id);
             $arr_row['status'] = 5; //Iniciada
             $arr_row['related_1'] = $user->id;

@@ -119,12 +119,22 @@ class Escenas extends CI_Controller{
         $data['arrGenero'] = $this->Item_model->arr_options('category_id = 59');
         $data['arrGrupoEdad'] = $this->Item_model->arr_options('category_id = 101');
 
-
         $this->App_model->view(TPL_ADMIN, $data);
     }
 
 // PROCESO DE RESPUESTA
 //-----------------------------------------------------------------------------
+
+    function get_mis_escenas()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $escenas = $this->Escena_model->mis_escenas($user_id);
+
+        $data['escenas'] = $escenas->result();
+
+        //Salida JSON
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
 
     /**
      * AJAX JSON
@@ -162,6 +172,11 @@ class Escenas extends CI_Controller{
 
         //Salida JSON
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    function read_answer()
+    {
+
     }
 
 }

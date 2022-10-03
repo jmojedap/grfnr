@@ -5,19 +5,19 @@ var sections = [
         id: 'basic',
         text: 'General',
         cf: 'accounts/edit/basic',
-        roles: [1,2,4,21,31],
+        roles: [1,2,4,21,32],
     },
     {
         id: 'image',
         text: 'Imagen',
         cf: 'accounts/edit/image',
-        roles: [1,2,3,21,31],
+        roles: [1,2,3,21,32],
     },
     {
         id: 'password',
         text: 'Contraseña',
         cf: 'accounts/edit/password',
-        roles: [1,2,3,21,31],
+        roles: [1,2,3,21,32],
     }
 ];
 

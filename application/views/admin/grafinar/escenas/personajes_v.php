@@ -24,9 +24,9 @@
 </style>
 
 <div id="personajesApp">
-    <div class="row">
+    <div class="row" style="min-height: 670px;">
         <div class="col-md-8">
-            <div id="escena_image"
+            <div id="escena_image" class="border"
                 v-bind:style="`background-image: url(` + escena.url_image + `);`"
                 v-on:click="setPosition"
                 >
@@ -43,6 +43,7 @@
                 <thead>
                     <th></th>
                     <th width="10px">Cód.</th>
+                    <th width="10px">ID</th>
                     <th>Personaje</th>
                     <th>left</th>
                     <th>top</th>
@@ -54,6 +55,7 @@
                                 <i class="far fa-circle"></i>
                             </button>
                         </td>
+                        <td>{{ personaje.id }}</td>
                         <td>{{ personaje.code_ucc }}</td>
                         <td>
                             {{ personaje.nombre }}
@@ -113,7 +115,7 @@ var personajesApp = new Vue({
         },
         setPosition: function(e){
             var offset = this.getSceneOffset()
-            console.log('escenaImage.offsetLeft:', offset.left)
+            console.log(escenaImage)
             console.log(e.clientX)
             key = this.currKey
             this.list[key].top = e.clientY - 110

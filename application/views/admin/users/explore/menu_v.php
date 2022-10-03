@@ -5,7 +5,7 @@ var sections = [
         id: 'users_explore',
         text: 'Explorar',
         cf: 'users/explore',
-        roles: [1,2],
+        roles: [1,2,3],
     },
     {
         id: 'users_import',

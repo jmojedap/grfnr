@@ -34,20 +34,6 @@ var nav_1_elements = [
         subelements: []
     },
     {
-        text: 'Grafinar',
-        active: false,
-        style: '',
-        icon: 'fa fa-tag',
-        cf: '',
-        sections: [],
-        subelements: [
-            {
-                text: 'Respuestas', active: false, icon: 'fa fa-edit', cf: 'respuestas/explore',
-                sections: ['respuestas/explore']
-            },
-        ]
-    },
-    {
         text: 'Ajustes',
         active: false,
         style: '',

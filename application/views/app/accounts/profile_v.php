@@ -1,8 +1,10 @@
 <div class="center_box_750">
     <div class="text-center">
-        <a href="<?= URL_APP . "accounts/edit/image" ?>">
-            <img src="<?= $row->url_image ?>" alt="Imagen de perfil del usuario" class="w120p rounded rounded-circle border mb-2" onerror="this.src='<?= URL_IMG ?>users/user.png'">
-        </a>
+        <?php if ( $this->session->userdata('role') <= 21  ) : ?>
+            <a href="<?= URL_APP . "accounts/edit/image" ?>">
+                <img src="<?= $row->url_image ?>" alt="Imagen de perfil del usuario" class="w120p rounded rounded-circle border mb-2" onerror="this.src='<?= URL_IMG ?>users/user.png'">
+            </a>
+        <?php endif; ?>
     </div>
     <table class="table bg-white text-left">
         <tbody>

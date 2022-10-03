@@ -22,6 +22,10 @@
                 class="btn btn-light only-lg" v-bind:title="`Exportar ` + qtyResults + ` registros encontrados a Excel`">
                 <i class="fa fa-download"></i>
             </a>
+            <a href="<?= URL_ADMIN . "{$controller}export_details/?" ?>"
+                class="btn btn-light only-lg" title="Exportar detalle de respuestas por personaje">
+                <i class="fa fa-download"></i> Detalles
+            </a>
             <button class="btn btn-warning" title="Eliminar elementos seleccionados"
                 data-toggle="modal" data-target="#modal_delete"
                 v-show="selected.length > 0"
