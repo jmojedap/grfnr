@@ -1,0 +1,7 @@
+[
+    {
+        "process_name":"Actualizar Palabras",
+        "process_link":"respuestas/update_answer_words",
+        "description":"Actualiza la tabla de frecuencias de palabras de las narraciones con las respuestas más recientes"
+    }
+]

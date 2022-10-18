@@ -17,6 +17,7 @@ class Escenas extends CI_Controller {
 
         $this->load->model('Post_model');
         $this->load->model('Escena_model');
+        $this->load->model('Respuesta_model');
         
         //Local time set
         date_default_timezone_set("America/Bogota");
@@ -89,7 +90,7 @@ class Escenas extends CI_Controller {
      */
     function guardar_respuesta($escena_id, $respuesta_id)
     {
-        $data = $this->Escena_model->guardar_respuesta($escena_id, $respuesta_id);
+        $data = $this->Respuesta_model->guardar($escena_id, $respuesta_id);
 
         //Salida JSON
         $this->output->set_content_type('application/json')->set_output(json_encode($data));

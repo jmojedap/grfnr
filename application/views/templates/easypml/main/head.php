@@ -47,6 +47,7 @@
 <!-- navbar elements -->
 <script src="<?= URL_RESOURCES ?>config/easypml/menus/nav_1_elements_<?= $this->session->userdata('role') ?>.js"></script>
 
+<link rel="stylesheet" href="<?= URL_RESOURCES ?>css/app_grafinar.css">
 <link rel="stylesheet" href="<?= URL_RESOURCES ?>templates/easypml/theme-ucc.css">
 <link rel="stylesheet" href="<?= URL_RESOURCES ?>templates/easypml/style.css">
 <link rel="stylesheet" href="<?= URL_RESOURCES ?>templates/easypml/app.css">

@@ -11,23 +11,11 @@
         </div>
     </div>
     <div>
-        <ul class="nav nav-tabs mb-2">
-            <li class="nav-item pointer">
-                <a class="nav-link" v-bind:class="{'active': section == 'narracion' }" v-on:click="setSection('narracion')">Historia</a>
-            </li>
-            <li class="nav-item pointer">
-                <a class="nav-link" v-bind:class="{'active': section == 'emociones' }" v-on:click="setSection('emociones')">Emociones</a>
-            </li>
-        </ul>
-
-        <div v-show="section == 'narracion'">
-            <div class="card">
-                <div class="card-body">
-                    <p>{{ respuesta.content }}</p>
-                </div>
+        <div class="card mb-2">
+            <div class="card-body">
+                <h3>Narración</h3>
+                <p>{{ respuesta.content }}</p>
             </div>
-        </div>
-        <div v-show="section == 'emociones'">
             <table class="table table-sm bg-white">
                 <thead>
                     <th width="10px">No.</th>
@@ -50,5 +38,41 @@
                 </tbody>
             </table>
         </div>
+
+        <table class="table table-sm bg-white">
+            <tbody>
+                <tr>
+                    <td class="text-muted">Ciudad</td>
+                    <td>{{ respuesta.city_name }}</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Institución</td>
+                    <td>{{ user.institution }}</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Usuario</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Edad</td>
+                    <td><span v-show="respuesta.age > 0">{{ respuesta.age }} años</span></td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Género</td>
+                    <td>
+                        <span v-show="user.gender == 1">Femenino</span>
+                        <span v-show="user.gender == 2">Masculino</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-muted">ID respuesta</td>
+                    <td>{{ respuesta.id }}</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">ID escena</td>
+                    <td>{{ respuesta.escena_id }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

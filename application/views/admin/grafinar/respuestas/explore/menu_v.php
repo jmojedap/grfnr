@@ -6,6 +6,12 @@
             id: 'respuestas_explore',
             cf: 'respuestas/explore',
             roles: [1,2,3]
+        },
+        {
+            text: 'Procesos',
+            id: 'respuestas_processes',
+            cf: 'respuestas/processes',
+            roles: [1,2,3]
         }
     ]
     

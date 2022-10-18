@@ -135,48 +135,4 @@ class Escenas extends CI_Controller{
         //Salida JSON
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
-
-    /**
-     * AJAX JSON
-     * Crea registro de respuesta de escena en la tabla posts (type 129)
-     * 2022-09-02
-     */
-    function iniciar_respuesta($escena_id)
-    {
-        $user_id = $this->session->userdata('user_id');
-        $data = $this->Escena_model->iniciar_respuesta($escena_id, $user_id);
-
-        //Salida JSON
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
-    }
-
-    /**
-     * AJAX JSON
-     * Guardar respuesta a una escena, enviada por participante
-     * 2022-09-03
-     */
-    function guardar_respuesta($escena_id, $respuesta_id)
-    {
-        $data = $this->Escena_model->guardar_respuesta($escena_id, $respuesta_id);
-
-        //Salida JSON
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
-    }
-
-    /**
-     * Marcar un posts respuesta como finalizado
-     * 2022-09-04
-     */
-    function finalizar_respuesta($escena_id, $respuesta_id) {
-        $data = $this->Escena_model->finalizar_respuesta($escena_id, $respuesta_id);
-
-        //Salida JSON
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
-    }
-
-    function read_answer()
-    {
-
-    }
-
 }

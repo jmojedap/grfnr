@@ -4,7 +4,7 @@
     <div class="center_box_750">
         <div class="card">
             <div class="card-body">
-                <form accept-charset="utf-8" method="POST" id="inicioForm" @submit.prevent="handleSubmit">
+                <form accept-charset="utf-8" method="POST" id="inicioForm" @submit.prevent="validateSubmit">
                     <input type="hidden" name="gender" v-model="fields.gender">
                     <!-- Campo para validación Google ReCaptcha V3 -->
                     <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
@@ -96,21 +96,21 @@
 <script>
 // Variables
 //-----------------------------------------------------------------------------
-/*var userData = {
+var userData = {
     organization_id: '01',
     first_name: 'Lina María',
     last_name: 'López',
     school_level: '06',
-    gender: '1',
-}*/
+    gender: '',
+}
 
-var userData = {
+/*var userData = {
     organization_id: '',
     first_name: '',
     last_name: '',
     school_level: '',
     gender: '',
-}
+}*/
 // VueApp
 //-----------------------------------------------------------------------------
 var inicioApp = createApp({
@@ -125,6 +125,7 @@ var inicioApp = createApp({
     },
     methods: {
         handleSubmit: function(){
+
             this.loading = true
             var formValues = new FormData(document.getElementById('inicioForm'))
             axios.post(URL_API + 'app/start_session/', formValues)
@@ -139,6 +140,14 @@ var inicioApp = createApp({
                 this.loading = false
             })
             .catch( function(error) {console.log(error)} )
+        },
+        validateSubmit: function(){
+            console.log(this.fields.gender)
+            if ( this.fields.gender > 0 ) {
+                this.handleSubmit()
+            } else {
+                toastr['error']('Seleccione el género')
+            }
         },
         setGender: function(value){
             this.fields.gender = value

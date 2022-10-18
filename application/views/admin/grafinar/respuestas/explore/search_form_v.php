@@ -8,14 +8,12 @@
                 <option v-for="optionEscena in arrEscena" v-bind:value="`0` + optionEscena.id">{{ optionEscena.name }}</option>
             </select>
         </div>
-    
         <div>
-            <label for="u">Id usuario creador</label>
-            <input
-            name="u" type="number" class="form-control"
-            title="ID usuario creador" placeholder="ID usuario creador"
-            v-model="filters.u"
-            >
+            <label for="org">Institución</label>
+            <select name="org" v-model="filters.org" class="form-control">
+                <option value="">[ Todas ]</option>
+                <option v-for="optionInstitucion in arrInstitucion" v-bind:value="`0` + optionInstitucion.id">{{ optionInstitucion.name }}</option>
+            </select>
         </div>
         
         <!-- Botón ejecutar y limpiar filtros -->

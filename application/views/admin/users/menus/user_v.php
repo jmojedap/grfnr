@@ -6,7 +6,7 @@ var sections = [
         id: 'users_profile',
         text: 'Información',
         cf: 'users/profile/' + nav2RowId,
-        roles: [1,2],
+        roles: [1,2,3],
     },
     {
         id: 'users_edit',

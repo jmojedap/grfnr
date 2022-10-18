@@ -1,3 +1,8 @@
+<?php
+    $city_name = $this->App_model->place_name($respuesta->place_id, 'full_name');
+    $institution = $this->Db_model->row_id('posts', $user->organization_id);
+?>
+
 <script>
 // Variables
 //-----------------------------------------------------------------------------
@@ -16,21 +21,29 @@ var respuestaApp = new Vue({
     },
     data: {
         escena: <?= json_encode($escena) ?>,
-            personajes: <?= json_encode($personajes->result()) ?>,
-            currKey: -1,
-            currPersonaje: {id:0},
-            arrGenero: arrGenero,
-            arrGrupoEdad: arrGrupoEdad,
-            arrEmocion: arrEmocion,
-            personajesEmociones: <?= $respuesta->content_json ?>,
-            loading: false,
-            respuesta: {
-                id: <?= $respuesta->id ?>,
-                status: <?= $respuesta->status ?>,
-                content: <?= json_encode($respuesta->content) ?>,
-            },
-            section: 'narracion',
-            savingStatus: 0
+        personajes: <?= json_encode($personajes->result()) ?>,
+        currKey: -1,
+        currPersonaje: {id:0},
+        arrGenero: arrGenero,
+        arrGrupoEdad: arrGrupoEdad,
+        arrEmocion: arrEmocion,
+        personajesEmociones: <?= $respuesta->content_json ?>,
+        loading: false,
+        respuesta: {
+            id: <?= $respuesta->id ?>,
+            status: <?= $respuesta->status ?>,
+            content: <?= json_encode($respuesta->content) ?>,
+            city_name: '<?= $city_name ?>',
+            age: '<?= $respuesta->integer_1 ?>',
+            escena_id: '<?= $respuesta->related_2 ?>',
+        },
+        user: {
+            username: '<?= $user->username ?>',
+            gender: <?= $user->gender ?>,
+            institution: '<?= $institution->post_name ?>',
+        },
+        section: 'respuesta',
+        savingStatus: 0
     },
     methods: {
         checkStatus: function(){

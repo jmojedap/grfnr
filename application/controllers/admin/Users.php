@@ -127,8 +127,8 @@ class Users extends CI_Controller{
 
         $data['view_a'] = $this->views_folder . 'profile/profile_v';
 
-        if ( $data['row']->role == 21 ) {
-            $data['view_a'] = $this->views_folder . 'profile/21_v';
+        if ( $data['row']->role == 32 ) {
+            $data['view_a'] = $this->views_folder . 'profile/32_v';
         }
 
         $data['back_link'] = $this->url_controller . 'explore';

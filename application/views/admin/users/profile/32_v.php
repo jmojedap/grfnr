@@ -1,5 +1,14 @@
 <?php
     $condition = "creator_id = {$row->id} AND type_id IN (7,6)";
+
+    $institution_name = 'ND';
+    $city_name = 'ND';
+
+    $institution = $this->Db_model->row_id('posts',$row->organization_id);
+    if ( ! is_null($institution) ) {
+        $institution_name = $institution->post_name;
+        $city_name = $this->App_model->place_name($institution->place_id, 'full_name');
+    }
 ?>
 
 <div class="container" id="profile_app">
@@ -32,24 +41,18 @@
                         <td class="td-title">Username</td>
                         <td><?= $row->username ?></td>
                     </tr>
-
                     <tr>
-                        <td class="td-title">Correo electrónico</td>
-                        <td><?= $row->email ?></td>
+                        <td class="td-title">Ciudad</td>
+                        <td><?= $city_name ?></td>
                     </tr>
-
                     <tr>
-                        <td class="td-title">Documento</td>
-                        <td><?= $this->Item_model->name(53, $row->document_type, 'abbreviation') ?> &middot; <?= $row->document_number ?></td>
+                        <td class="td-title">Institución educativa</td>
+                        <td><?= $institution_name ?></td>
                     </tr>
 
                     <tr>
                         <td class="td-title">Notas privadas</td>
                         <td><?= $row->admin_notes ?></td>
-                    </tr>
-                    <tr>
-                        <td class="td-title">Acerca de mí</td>
-                        <td><?= $row->about ?></td>
                     </tr>
 
                     <tr>

@@ -74,7 +74,7 @@ var catalogoApp = createApp({
         },
         startAnswer: function() {
             this.loading = true
-            axios.get(URL_APP + 'escenas/iniciar_respuesta/' + this.currEscena.id)
+            axios.get(URL_API + 'respuestas/iniciar/' + this.currEscena.id)
             .then(response => {
                 var respuestaId = response.data.saved_id
                 if ( respuestaId > 0 ) {

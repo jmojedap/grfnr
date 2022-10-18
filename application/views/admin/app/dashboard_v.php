@@ -77,7 +77,7 @@
             <!-- RESPUESTAS -->
             <div class="col-md-6">
                 <div class="card mb-2">
-                    <a href="<?= URL_ADMIN . "posts/explore/?type=0129" ?>">
+                    <a href="<?= URL_ADMIN . "respuestas/explore/" ?>">
                         <div class="card-content">
                             <div class="card-body">
                                 <div class="media">

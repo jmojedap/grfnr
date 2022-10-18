@@ -22,10 +22,7 @@
                 class="btn btn-light only-lg" v-bind:title="`Exportar ` + qtyResults + ` registros encontrados a Excel`">
                 <i class="fa fa-download"></i>
             </a>
-            <a href="<?= URL_ADMIN . "{$controller}export_details/?" ?>"
-                class="btn btn-light only-lg" title="Exportar detalle de respuestas por personaje">
-                <i class="fa fa-download"></i> Detalles
-            </a>
+            
             <button class="btn btn-warning" title="Eliminar elementos seleccionados"
                 data-toggle="modal" data-target="#modal_delete"
                 v-show="selected.length > 0"
@@ -33,8 +30,20 @@
                 <i class="fa fa-trash"></i>
             </button>
         </div>
+
+        <div class="col-md-2">
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-download"></i> Descargar
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="<?= URL_ADMIN . "{$controller}export_details/?" ?>">Detalles personaje</a>
+                    <a class="dropdown-item" href="<?= URL_ADMIN . "{$controller}export_words/?" ?>">Palabras narraciones</a>
+                </div>
+            </div>
+        </div>
         
-        <div class="col-md-6 mb-2 text-right">
+        <div class="col-md-4 mb-2 text-right">
             <a class="btn text-muted">
                 {{ (numPage - 1) * perPage + 1 }} a {{ numPage * perPage }} de
                 <span class="text-primary">

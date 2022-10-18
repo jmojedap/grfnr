@@ -82,7 +82,7 @@ var responderApp = createApp({
             var formValues = new FormData()
             formValues.append('content', this.respuesta.content)
             formValues.append('content_json', JSON.stringify(this.personajesEmociones))
-            axios.post(URL_API + 'escenas/guardar_respuesta/' + this.escena.id + '/' + this.respuesta.id, formValues)
+            axios.post(URL_API + 'respuestas/guardar/' + this.escena.id + '/' + this.respuesta.id, formValues)
             .then(response => {
                 if ( response.data.saved_id > 0 ) {
                     this.escena.status = response.data.respuesta_status
@@ -94,7 +94,7 @@ var responderApp = createApp({
         },
         finalizeAnswer: function(){
             this.loading = true
-            axios.get(URL_API + 'escenas/finalizar_respuesta/' + this.escena.id + '/' + this.respuesta.id)
+            axios.get(URL_API + 'respuestas/finalizar/' + this.escena.id + '/' + this.respuesta.id)
             .then(response => {
                 if ( response.data.saved_id > 0 ) {
                     this.respuesta.status = 1

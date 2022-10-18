@@ -147,12 +147,11 @@ class App_model extends CI_Model{
      */
     function place_name($place_id, $format = 1)
     {
-        
         $place_name = 'ND';
         
         if ( strlen($place_id) > 0 )
         {
-            $this->db->select("places.id, places.place_name, region, country"); 
+            $this->db->select("places.id, places.place_name, region, country, full_name"); 
             $this->db->where('places.id', $place_id);
             $row = $this->db->get('places')->row();
 
@@ -162,6 +161,8 @@ class App_model extends CI_Model{
                 $place_name = $row->place_name . ', ' . $row->region;
             } elseif ( $format == 'CRP' ) {
                 $place_name = $row->place_name . ' - ' . $row->region . ' - ' . $row->country;
+            } elseif ( $format == 'full_name' ) {
+                $place_name = $row->full_name;
             }
         }
         
