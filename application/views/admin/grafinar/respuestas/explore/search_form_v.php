@@ -15,6 +15,13 @@
                 <option v-for="optionInstitucion in arrInstitucion" v-bind:value="`0` + optionInstitucion.id">{{ optionInstitucion.name }}</option>
             </select>
         </div>
+        <div>
+            <label for="level">Grado</label>
+            <select name="level" v-model="filters.level" class="form-control">
+                <option value="">[ Todos ]</option>
+                <option v-for="optionLevel in arrLevel" v-bind:value="optionLevel.str_cod">{{ optionLevel.name }}</option>
+            </select>
+        </div>
         
         <!-- Botón ejecutar y limpiar filtros -->
         <div>

@@ -51,11 +51,11 @@ class Search_model extends CI_Model{
             'condition',//SQL Where additional condition
             'fe1',      //Filtro especial 1
             'fe2',      //Filtro especial 2
-            'fe3',       //Filtro especial 3
+            'fe3',      //Filtro especial 3
             'o',        //Order by
             'ot',       //Order type
             'sf',       //Select format
-            'med',       //App, medición ID
+            'level',    //App, School level
         );
         
         return $search_indexes;

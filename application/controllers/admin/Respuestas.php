@@ -54,6 +54,7 @@ class Respuestas extends CI_Controller{
         //Opciones de filtros de búsqueda
             $data['arrEscena'] = $this->App_model->options_post('type_id = 121');
             $data['arrInstitucion'] = $this->App_model->options_post('type_id = 101');
+            $data['arrLevel'] = $this->Item_model->arr_options('category_id = 3 AND item_group = 1');
             
         //Cargar vista
             $this->App_model->view(TPL_ADMIN, $data);

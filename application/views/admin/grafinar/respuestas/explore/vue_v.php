@@ -25,6 +25,7 @@ var appExplore = new Vue({
         activeFilters: false,
         arrEscena: <?= json_encode($arrEscena) ?>,
         arrInstitucion: <?= json_encode($arrInstitucion) ?>,
+        arrLevel: <?= json_encode($arrLevel) ?>,
     },
     methods: {
         getList: function(e, numPage = 1){

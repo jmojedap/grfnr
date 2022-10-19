@@ -137,6 +137,7 @@ class Respuesta_model extends CI_Model{
         if ( $filters['u'] != '' ) { $condition .= "related_1 = {$filters['u']} AND "; }
         if ( $filters['fe1'] != '' ) { $condition .= "related_2 = {$filters['fe1']} AND "; }
         if ( $filters['org'] != '' ) { $condition .= "parent_id = {$filters['org']} AND "; }
+        if ( $filters['level'] != '' ) { $condition .= "integer_2 = {$filters['level']} AND "; }
         if ( $filters['condition'] != '' ) { $condition .= "{$filters['condition']} AND "; }
         
         //Quitar cadena final de ' AND '
@@ -244,6 +245,7 @@ class Respuesta_model extends CI_Model{
             $arr_row['related_2'] = $escena->id;
             $arr_row['parent_id'] = $user->organization_id; //Institución
             $arr_row['integer_1'] = $this->pml->age($user->birth_date);
+            $arr_row['integer_2'] = $user->organization_id; //Nivel escolar
 
             //Condición, un usuario solo puede responder una escena una vez
             $condition = "type_id = {$arr_row['type_id']}
@@ -274,6 +276,84 @@ class Respuesta_model extends CI_Model{
         $data['respuesta_status'] = $arr_row['status'];
     
         return $data;
+    }
+
+    /**
+     * Marcar un posts respuesta como finalizado
+     * 2022-09-04
+     */
+    function finalizar($escena_id, $respuesta_id)
+    {
+        $data = array('saved_id' => 0, 'message' => 'No se pudo finalizar la respuesta');
+
+        //Condición de identificación, estado y datos
+        $condition = "type_id = 129 AND id = {$respuesta_id}
+            AND related_2 = {$escena_id} AND status = 2";
+        $respuesta = $this->Db_model->row('posts', $condition);
+
+        if ( ! is_null($respuesta) ) {
+            $arr_row['status'] = 1; //Finalizada
+            $arr_row['updater_id'] = $this->session->userdata('user_id');
+            $arr_row['updated_at'] = date('Y-m-d H:i:s');
+
+            $condition = "id = {$respuesta->id}";
+            $data['saved_id'] = $this->Db_model->save('posts', $condition, $arr_row);
+            if ( $data['saved_id'] > 0 ) {
+                $data['message'] = 'Respuesta finalizada';
+            }
+
+            $data['details'] = $this->guardar_detalle($escena_id, $respuesta_id);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Guardar detalle de emociones de una respuesta en la tabla gfr_answers
+     * 2022-09-05
+     */
+    function guardar_detalle($escena_id, $respuesta_id)
+    {
+        $data = array('status' => 0, 'qty_details' => 0);
+
+        $escena = $this->Escena_model->row($escena_id);
+        $respuesta = $this->Db_model->row_id('posts', $respuesta_id);
+
+        $emocionesPersonajes = json_decode($respuesta->content_json);
+        
+        //Preventivo, eliminar detalle ya existente
+        $sql = "DELETE FROM grf_answers WHERE scene_id = {$escena_id} AND answer_id = {$respuesta_id}";
+        $this->db->query($sql);
+
+        $arr_row['user_id'] = $respuesta->related_1;
+        $arr_row['scene_id'] = $escena_id;
+        $arr_row['answer_id'] = $respuesta_id;
+
+        foreach ($emocionesPersonajes as $emocionPersonaje) {
+            $arr_row['character_id'] = $emocionPersonaje->character_id;
+            $arr_row['feeling_cod'] = $emocionPersonaje->feeling_cod;
+
+            $this->db->insert('grf_answers', $arr_row);
+
+            if ( $this->db->insert_id() ) { $data['qty_details']++; }
+        }
+
+        //Extra control, eliminar detalles huérfanos
+        $this->limpiar_detalle();
+
+        return $data;
+    }
+
+    /**
+     * Eliminar registros de la tabla grf_answers de respuestas
+     * que ya no existan en la tabla posts.
+     * 2022-10-18
+     */
+    function limpiar_detalle()
+    {
+        $sql = 'DELETE FROM grf_answers
+            WHERE answer_id NOT IN (SELECT id FROM posts)';
+        $this->db->query($sql);
     }
 
 // CRUD

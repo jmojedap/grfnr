@@ -367,7 +367,8 @@ class User_model extends CI_Model{
     function deleteable()
     {
         $deleteable = 0;
-        if ( in_array($this->session->userdata('role'), array(1,2)) ) { $deleteable = 1; }
+        if ( in_array($this->session->userdata('role'), [1,2,3]))
+        { $deleteable = 1; }
 
         return $deleteable;
     }
@@ -384,6 +385,7 @@ class User_model extends CI_Model{
         {
             //Tablas relacionadas
                 $this->db->where('user_id', $user_id)->delete('users_meta');
+                $this->db->where('related_1', $user_id)->where('type_id',129)->delete('posts');    //Respuestas escena
             
             //Tabla principal
                 $this->db->where('id', $user_id)->delete('users');
