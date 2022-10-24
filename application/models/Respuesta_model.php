@@ -568,6 +568,26 @@ class Respuesta_model extends CI_Model{
     }
 
     /**
+     * Query resumen conteo de palabras en narraciones, acumulado desde la tabla
+     * grf_words.
+     * 2022-10-20
+     */
+    function words_frecuency($limit = 100, $select = '*')
+    {
+        $sql = "SELECT {$select} FROM 
+            (SELECT word, COUNT(id) AS qty_use 
+                FROM `grf_words`
+                GROUP BY word 
+                ORDER BY COUNT(id) DESC) AS subquery
+            WHERE subquery.qty_use > 1
+            LIMIT {$limit}";
+
+        $words = $this->db->query($sql);
+
+        return $words;
+    }
+
+    /**
      * Query para exportar
      * 2022-08-17
      */
@@ -575,7 +595,7 @@ class Respuesta_model extends CI_Model{
     {
         //Select
         $select = 'grf_words.id AS palabra_id, word AS palabra, quantity AS cantidad_usada,
-             username, school_level AS grado_escolar, answers.integer_1 AS edad_usuario,
+             grf_words.answer_id AS respuesta_id, username, school_level AS grado_escolar, answers.integer_1 AS edad_usuario,
              answers.text_2 AS genero usuario,
              scene_id AS escena_id, scenes.post_name AS escena';
         $this->db->join('users', 'grf_words.user_id = users.id', 'left');
@@ -589,5 +609,15 @@ class Respuesta_model extends CI_Model{
         return $query;
     }
 
+    /**
+     * Query para exportar frecuencia de palabras acumuladas
+     * 2022-10-24
+     */
+    function words_accumulated_query_export()
+    {
+        $select = 'word AS palabra, qty_use AS cantidad_usada';
+        $query = $this->words_frecuency(1000, $select);
 
+        return $query;
+    }
 }

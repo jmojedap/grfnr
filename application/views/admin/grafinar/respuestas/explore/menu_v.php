@@ -12,6 +12,13 @@
             id: 'respuestas_processes',
             cf: 'respuestas/processes',
             roles: [1,2,3]
+        },
+        {
+            text: 'Palabras',
+            id: 'respuestas_words',
+            cf: 'respuestas/words',
+            roles: [1,2,3],
+            anchor: true
         }
     ]
     

@@ -297,6 +297,17 @@ class Respuestas extends CI_Controller{
 // PALABRAS DE LAS NARRACIONES
 //-----------------------------------------------------------------------------
 
+    function words()
+    {
+        $data['head_title'] = 'Palabras más frecuentes';
+        $data['view_a'] = $this->views_folder . 'words/words_v.php';
+        $data['nav_2'] = $this->views_folder . 'explore/menu_v';
+
+        $data['words'] =$this->Respuesta_model->words_frecuency();
+
+        $this->App_model->view(TPL_ADMIN, $data);
+    }
+
     /**
      * AJAX JSON
      * Actualizar tabla gfr_words, con las palabras de las narraciones de las respuestas
@@ -342,4 +353,32 @@ class Respuestas extends CI_Controller{
         }
     }
 
+    /**
+     * Exportar palabras de las narraciones, tabla grf_words, acumuladas por conteo
+     * 2022-10-17
+     */
+    function export_words_accumulated()
+    {
+        set_time_limit(120);    //120 segundos, 2 minutos para el proceso
+
+        $data['query'] = $this->Respuesta_model->words_accumulated_query_export();
+
+        if ( $data['query']->num_rows() > 0 ) {
+            //Preparar datos
+                $data['sheet_name'] = 'frecuencia_palabras';
+
+            //Objeto para generar archivo excel
+                $this->load->library('Excel');
+                $file_data['obj_writer'] = $this->excel->file_query($data);
+
+            //Nombre de archivo
+                $file_data['file_name'] = date('Ymd_His') . '_' . $data['sheet_name'];
+
+            $this->load->view('common/download_excel_file_v', $file_data);
+        } else {
+            $data = array('message' => 'No se encontraron palabras para exportar');
+            //Salida JSON
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        }
+    }
 }
